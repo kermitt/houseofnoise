@@ -1,0 +1,143 @@
+<html>
+
+<head>
+    <style>
+        input {
+            width: 100%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1>SAKM's house of noise</h1> 
+    <div id="typed">
+
+    </div>
+
+    <hr>
+
+    <textarea rows='30' cols='60' id='story'> 
+</textarea>
+    <button onclick='playstory();'>Play</button>
+    <input type="text" onkeypress="uniCharCode(event)">
+    <script>
+        let seen = {}
+        seen['97'] = 'crow3.wav' //a
+        seen['98'] = 'dog1.wav' //b
+        seen['99'] = 'guitar1.mp3' //c
+        seen['100'] = 'guitar2.wav' //d
+        seen['101'] = 'guitar3.wav' //e
+        seen['102'] = 'guitar4.wav' //f
+        seen['103'] = 'guitar5.wav' //g
+        seen['104'] = 'guitar6.wav' //h
+        seen['105'] = 'guitar7.wav' //i
+        seen['106'] = 'guitar8.wav' //j
+        // seen['97'] = 'a48.mp3' //a
+        // seen['98'] = 'a49.mp3' //b
+        // seen['99'] = 'a50.mp3' //c
+        // seen['100'] = 'a51.mp3' //d
+        // seen['101'] = 'a52.mp3' //e
+        // seen['102'] = 'a53.mp3' //f
+        // seen['103'] = 'a54.mp3' //g
+        // seen['104'] = 'a55.mp3' //h
+        // seen['105'] = 'a56.mp3' //i
+        // seen['106'] = 'a57.mp3' //j
+        seen['107'] = 'a65.mp3' //k
+        seen['108'] = 'a66.mp3' //l
+        seen['109'] = 'a67.mp3' //m
+        seen['110'] = 'a68.mp3' //n
+        seen['111'] = 'a69.mp3' //o
+        seen['112'] = 'a70.mp3' //p
+        seen['113'] = 'a71.mp3' //q
+        seen['114'] = 'a72.mp3' //r
+        seen['115'] = 'a73.mp3' //s
+        seen['116'] = 'a74.mp3' //t
+        seen['117'] = 'a75.mp3' //u
+        seen['118'] = 'a76.mp3' //v
+        seen['120'] = 'a77.mp3' //x
+        seen['121'] = 'a78.mp3' //y
+        seen['122'] = 'a79.mp3' //z
+        seen['65'] = 'a80.mp3' //A
+        seen['66'] = 'a81.mp3' //B
+        seen['67'] = 'a82.mp3' //C
+        seen['68'] = 'a83.mp3' //D
+        seen['69'] = 'a84.mp3' //E
+        seen['70'] = 'a85.mp3' //F
+        seen['71'] = 'a86.mp3' //G
+        seen['72'] = 'a87.mp3' //H
+        seen['73'] = 'a88.mp3' //I
+        seen['74'] = 'a89.mp3' //J
+        seen['75'] = 'a90.mp3' //K
+        seen['76'] = 'b49.mp3' //L
+        seen['77'] = 'b50.mp3' //M
+        seen['78'] = 'b52.mp3' //N
+        seen['79'] = 'b53.mp3' //O
+        seen['80'] = 'b54.mp3' //P
+        seen['81'] = 'b56.mp3' //Q
+        seen['82'] = 'b57.mp3' //R
+        seen['83'] = 'b66.mp3' //S
+        seen['84'] = 'b67.mp3' //T
+        seen['85'] = 'b68.mp3' //U
+        seen['86'] = 'b69.mp3' //V
+        seen['87'] = 'b71.mp3' //W
+        seen['88'] = 'b72.mp3' //X
+        seen['89'] = 'b73.mp3' //Y
+        seen['90'] = 'b74.mp3' //Z
+        seen['49'] = 'b76.mp3' //1
+        seen['50'] = 'b79.mp3' //2
+        seen['51'] = 'b80.mp3' //3
+        seen['52'] = 'b81.mp3' //4
+        seen['53'] = 'b83.mp3' //5
+        seen['54'] = 'b84.mp3' //6
+        seen['55'] = 'b86.mp3' //7
+        seen['56'] = 'b87.mp3' //8
+        seen['57'] = 'b89.mp3' //9
+        seen['48'] = 'b90.mp3' //0
+
+        function uniCharCode(event) {
+            let char = event.which || event.keyCode;
+            let letter = String.fromCharCode(char)
+            let emit = char + "  | " + letter + " | " + seen[char]
+            console.log(emit)
+            document.getElementById("typed").innerHTML = emit
+            playit(seen[char])
+        }
+    </script>
+
+    <script>
+        function playit(mp3) {
+            try {
+                var audio = new Audio(mp3);
+                audio.play();
+            } catch (boom) {
+                alert("ack! " + boom)
+            }
+        }
+
+        function playstory() {
+            let x = document.getElementById("story").value
+            let letters = x.split("")
+            playnote(letters, 0);
+        }
+
+        function playnote(ary, i) {
+            if (ary[i] != undefined) {
+                let letter = ary[i]
+                let ascii = letter.charCodeAt(0)
+                i++
+
+                let r = Math.random() * 500
+		        console.log(letter + " " + ascii + " milsec " + r )
+
+                playit("files/" + seen[ascii])
+                setTimeout(function() { playnote(ary, i) }, 100 + r);
+            } else {
+                console.log("STOP");
+            }
+        }
+    </script>
+
+</body>
+
+</html>
