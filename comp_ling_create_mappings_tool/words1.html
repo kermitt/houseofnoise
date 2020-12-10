@@ -1,0 +1,123 @@
+<html>
+
+<head>
+    <script src='big_list.js' ></script>
+
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <style>
+        /* input {
+            width: 100%;
+        } */
+        .yep {
+            background-color: #0099cc;
+        }
+        .nope {
+            background-color: #ffa500;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1>SAKM's house of noise</h1> 
+    <div id="typed">
+
+    </div>
+
+    <hr>
+    <table>
+        <tr>
+            <td valign='top'>
+    <!-- <textarea rows='10' cols='60' id='story'> </textarea> -->
+    <input type="text" size="144" id="story"  value="" ></input>
+    
+
+
+
+        <button onclick='playstory();'>Play</button>
+    
+    
+        <!-- <input type="text" onkeypress="uniCharCode(event)"> -->
+                <div id='output'> </div>
+    </td>
+                <td valign='top'>
+                    <div id='options'></div>
+                </td>
+                </tr>
+                </table>
+<script>
+        function uniCharCode(event) {
+            let char = event.which || event.keyCode;
+            let letter = String.fromCharCode(char)
+            let emit = char + "  | " + letter + " | " + seen[char]
+            console.log(emit)
+            document.getElementById("typed").innerHTML = emit
+            playit(seen[char])
+        }
+</script>
+
+    <script>
+        function playit(mp3) {
+            try {
+                var audio = new Audio(mp3);
+                audio.play();
+            } catch (boom) {
+                alert("ack! " + boom)
+            }
+        }
+
+        const syllableRegex = /[^aeiouy]*[aeiouy]+(?:[^aeiouy]*$|[^aeiouy](?=[^aeiouy]))?/gi;
+function syllabify(word) {
+    word = word.trim();
+    const syllables = word.match(syllableRegex);
+    return syllables;
+}
+
+
+        function playstory() {
+            let x  = document.getElementById("story").value;
+            const words = x.split(" ").filter(Boolean);
+            let html = ""; 
+
+            words.forEach((word)=>{
+
+                let syllables = syllabify(word); 
+                syllables.forEach((item)=>{
+                    if ( data.hasOwnProperty(item)) {
+                        html += "<span class='yep'>" + item + "</span>";
+                    } else {
+                        html += "<span class='nope'>" + item + "</span>";
+
+                    }
+                }); 
+                html += "&nbsp;--- "
+                // console.log(word, syllables);
+            });
+            document.getElementById("output").innerHTML = html;
+
+        }
+
+        function playnote(ary, i) {
+            if (ary[i] != undefined) {
+                let letter = ary[i]
+                let ascii = letter.charCodeAt(0)
+                i++
+
+                let r = Math.random() * 500
+		        console.log(letter + " " + ascii + " milsec " + r )
+
+                playit("files/" + seen[ascii])
+                setTimeout(function() { playnote(ary, i) }, 100 + r);
+            } else {
+                console.log("STOP");
+            }
+        }
+    </script>
+
+
+
+</body>
+
+</html>
